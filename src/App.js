@@ -1,37 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Container, Box, Typography } from '@mui/material';
 import EventForm from './components/EventForm';
 import EventList from './components/EventList';
-import './styles.css';
+import PastEvents from './components/PastEvents';
+import Introduction from './components/Introduction';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  const [events, setEvents] = useState([]);
-
-  useEffect(() => {
-    const storedEvents = JSON.parse(localStorage.getItem('events'));
-    if (storedEvents) {
-      setEvents(storedEvents);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('events', JSON.stringify(events));
-  }, [events]);
-
-  const addEvent = (event) => {
-    setEvents([...events, event]);
-  };
-
-  const deleteEvent = (index) => {
-    const newEvents = events.filter((_, i) => i !== index);
-    setEvents(newEvents);
-  };
-
   return (
-    <div className="App">
-      <h1>Event Countdown App</h1>
-      <EventForm addEvent={addEvent} />
-      <EventList events={events} deleteEvent={deleteEvent} />
-    </div>
+    <Container>
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h2" gutterBottom>
+          Event Countdown App
+        </Typography>
+        <Introduction />
+        <EventForm />
+        <EventList />
+        <PastEvents />
+      </Box>
+      <ToastContainer />
+    </Container>
   );
 };
 
